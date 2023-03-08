@@ -5,7 +5,7 @@ PHP classes for simple terminal functionality
 ### ConsoleColor
 To install just run:
 
-      composer require schenke-io/console
+      composer require schenke-io/terminal
 
 Just call the static method and 
 
