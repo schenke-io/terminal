@@ -15,18 +15,19 @@ Just call the static method and
 use SchenkeIo\Terminal\ConsoleColor;
 
 echo "Standard\n";
-echo ConsoleColor::successLine('success !');
+echo ConsoleColor::successLine('+ super !');
 
 
 ```
 
 it will output:
-<div style="background-color:black;">
-<pre>
-<span style="color:white;">Standard</span>
-<span style="color:black;background-color:green;">success !</span>
-</pre>
-</div>
+
+```diff
+Standard
++ super !
+```
+
+
 
 To see all styles run:
 
