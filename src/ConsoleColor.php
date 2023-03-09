@@ -30,10 +30,23 @@ namespace SchenkeIo\Terminal;
  * @method static infoText(string $string)
  * @method static defaultText(string $string)
  *
+ * @method static redOnWhite(string $string)
+ * @method static blackOnCyan(string $string)
+ * @method static redOnCyan(string $string)
+ * @method static blackOnYellow(string $string)
+ * @method static blackOnGreen(string $string)
+ * @method static blackOnRed(string $string)
+ * @method static blueOnYellow(string $string)
+ *
+ * @method static yellow(string $string)
+ * @method static green(string $string)
+ * @method static blue(string $string)
+ * @method static red(string $string)
+ *
  */
 class ConsoleColor
 {
-    protected const style = [
+    public const styles = [
         'defaultLine' => ['withLineEnd'],
         'infoLine' => ['black', 'blue', 'withLineEnd'],
         'successLine' => ['black', 'green', 'withLineEnd'],
@@ -43,7 +56,21 @@ class ConsoleColor
         'infoText' => ['black', 'blue'],
         'successText' => ['black', 'green'],
         'warningText' => ['black', 'yellow'],
-        'dangerText' => ['black', 'red']
+        'dangerText' => ['black', 'red'],
+
+        'redOnWhite' => ['light_red', 'light_gray'],
+        'blackOnCyan' => ['black', 'cyan'],
+        'redOnCyan' => ['red', 'cyan'],
+        'blackOnYellow' => ['black', 'yellow'],
+        'blackOnGreen' => ['black', 'green'],
+        'blackOnRed' => ['black', 'red'],
+        'blueOnYellow' => ['blue', 'yellow'],
+
+        'yellow' => ['yellow', 'yellow'],
+        'green' => ['green', 'green'],
+        'blue' => ['blue', 'blue'],
+        'red' => ['red', 'red']
+
     ];
 
     protected const  foregroundColors = [
@@ -113,7 +140,7 @@ class ConsoleColor
      */
     public static function echoSelfTestAllStyles(): void
     {
-        foreach (self::style as $styleName => $styleValue) {
+        foreach (self::styles as $styleName => $styleValue) {
             echo "ConsoleColor::$styleName('$styleName) => ";
             echo self::$styleName($styleName);
             echo "\n";
@@ -134,14 +161,31 @@ class ConsoleColor
         $string = $args[0];
         array_shift($args);
         $coloredString = "";
-        // check if the name is a valid style name
-        $autoArgs = self::style[$name] ?? false;
-        if ($autoArgs) {
+        if ($autoArgs = self::styles[$name] ?? false) {
+            // style name
             $foregroundColor = array_shift($autoArgs);
             $args = array_merge($args, $autoArgs);
-        } else {
+        } elseif (
+            preg_match('@^([a-z]+)On([A-Z][a-z]+)@', $name, $matches)
+        ) {
+            // two color custom function
+            [$all, $foregroundColor, $backgroundColor] = $matches;
+            return self::$foregroundColor($string, strtolower($backgroundColor));
+        }elseif(
+            preg_match('@^([a-z]+)On([A-Z][a-z]+)With([A-Z][a-z]+)@', $name, $matches)
+        ){
+            // two color custom function with option
+            [$all, $foregroundColor, $backgroundColor,$option] = $matches;
+            return self::$foregroundColor(
+                $string,
+                strtolower($backgroundColor),
+                strtolower($option)
+            );
+        }   else {
             $foregroundColor = $name;
         }
+
+
         $coloredString .= self::escape(
             self::foregroundColors[$foregroundColor] ??
             self::foregroundColors['normal']

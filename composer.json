@@ -1,7 +1,7 @@
 {
   "name": "schenke-io/terminal",
   "description": "PHP classes for simple terminal functionality",
-  "version": "v1.0.4",
+  "version": "v1.0.5",
   "autoload": {
     "psr-4": {
       "SchenkeIo\\Terminal\\": "src/"
