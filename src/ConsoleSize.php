@@ -15,5 +15,4 @@ class ConsoleSize
     {
         return (new Console\Terminal())->getHeight();
     }
-
 }
