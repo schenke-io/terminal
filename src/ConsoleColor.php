@@ -28,16 +28,26 @@ namespace SchenkeIo\Terminal;
  * @method static string infoText(string $string)
  * @method static string defaultText(string $string)
  * @method static string redOnWhite(string $string)
+ * @method static string whiteOnRed(string $string)
  * @method static string blackOnCyan(string $string)
+ * @method static string cyanOnBlack(string $string)
  * @method static string redOnCyan(string $string)
+ * @method static string cyanOnRed(string $string)
  * @method static string blackOnYellow(string $string)
+ * @method static string yellowOnBlack(string $string)
  * @method static string blackOnGreen(string $string)
+ * @method static string greenOnBlack(string $string)
  * @method static string blackOnRed(string $string)
+ * @method static string redOnBlack(string $string)
  * @method static string blueOnYellow(string $string)
+ * @method static string yellowOnBlue(string $string)
  * @method static string yellow(string $string)
  * @method static string green(string $string)
  * @method static string blue(string $string)
  * @method static string red(string $string)
+ * @method static string magenta(string $string)
+ * @method static string black(string $string)
+ * @method static string gray(string $string)
  */
 class ConsoleColor
 {
@@ -54,18 +64,27 @@ class ConsoleColor
         'dangerText' => ['black', 'red'],
 
         'redOnWhite' => ['light_red', 'light_gray'],
+        'whiteOnRed' => ['light_gray', 'light_red'],
         'blackOnCyan' => ['black', 'cyan'],
+        'cyanOnBlack' => ['cyan', 'black'],
         'redOnCyan' => ['red', 'cyan'],
+        'cyanOnRed' => ['cyan', 'red'],
         'blackOnYellow' => ['black', 'yellow'],
+        'yellowOnBlack' => ['yellow', 'black'],
         'blackOnGreen' => ['black', 'green'],
+        'greenOnBlack' => ['green', 'black'],
         'blackOnRed' => ['black', 'red'],
+        'redOnBlack' => ['red', 'black'],
         'blueOnYellow' => ['blue', 'yellow'],
+        'yellowOnBlue' => ['yellow', 'blue'],
 
         'yellow' => ['yellow', 'yellow'],
         'green' => ['green', 'green'],
         'blue' => ['blue', 'blue'],
         'red' => ['red', 'red'],
-
+        'magenta' => ['magenta', 'magenta'],
+        'black' => ['black', 'black'],
+        'gray' => ['light_gray', 'light_gray'],
     ];
 
     protected const  foregroundColors = [
@@ -163,7 +182,7 @@ class ConsoleColor
             preg_match('@^([a-z]+)On([A-Z][a-z]+)With([A-Z][a-z]+)@', $name, $matches)
         ) {
             // two color custom function with option
-            [$all, $foregroundColor, $backgroundColor,$option] = $matches;
+            [$all, $foregroundColor, $backgroundColor, $option] = $matches;
 
             return self::$foregroundColor(
                 $string,
